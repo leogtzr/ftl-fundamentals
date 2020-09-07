@@ -82,3 +82,36 @@ func TestAddRandom(t *testing.T) {
 		}
 	}
 }
+
+func TestSqrt(t *testing.T) {
+	t.Parallel()
+
+	type testCase struct {
+		x           float64
+		want        float64
+		errExpected bool
+	}
+
+	tests := []testCase{
+		{
+			x:           -1,
+			want:        0,
+			errExpected: true,
+		},
+		{
+			x:           16,
+			want:        4,
+			errExpected: false,
+		},
+	}
+
+	for _, tc := range tests {
+		got, err := calculator.Sqrt(tc.x)
+		if errReceived := err != nil; tc.errExpected != errReceived {
+			t.Fatalf("Sqrt(%f): unexpected error status: %v", tc.x, errReceived)
+		}
+		if !tc.errExpected && got != tc.want {
+			t.Errorf("want %f, got %f", tc.want, got)
+		}
+	}
+}

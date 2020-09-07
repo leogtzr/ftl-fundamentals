@@ -3,6 +3,7 @@ package calculator
 
 import (
 	"fmt"
+	"math"
 )
 
 // Add takes two numbers and returns the result of adding them together.
@@ -28,4 +29,12 @@ func Divide(a, b float64) (float64, error) {
 		return 0.0, fmt.Errorf("cannot divide by 0")
 	}
 	return a / b, nil
+}
+
+// Sqrt ...
+func Sqrt(x float64) (float64, error) {
+	if x < 0.0 {
+		return 0.0, fmt.Errorf("error: %f, negative inputs are not allowed", x)
+	}
+	return math.Sqrt(x), nil
 }
