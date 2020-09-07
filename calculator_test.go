@@ -2,7 +2,9 @@ package calculator_test
 
 import (
 	"calculator"
+	"math/rand"
 	"testing"
+	"time"
 )
 
 func TestAdd(t *testing.T) {
@@ -62,9 +64,21 @@ func TestDivide(t *testing.T) {
 		if errReceived := err != nil; tc.errExpected != errReceived {
 			t.Fatalf("Divide(%f, %f): unexpected error status: %v", tc.a, tc.b, errReceived)
 		}
-		if got != tc.want {
+		if !tc.errExpected && got != tc.want {
 			t.Errorf("want %f, got %f", tc.want, got)
 		}
 	}
 
+}
+
+func TestAddRandom(t *testing.T) {
+	rand.Seed(time.Now().UnixNano())
+	for i := 0; i < 100; i++ {
+		a := rand.Float64()
+		b := rand.Float64()
+		sum := a + b
+		if got := calculator.Add(a, b); got != sum {
+			t.Errorf("want=%f, got=%f", sum, got)
+		}
+	}
 }
